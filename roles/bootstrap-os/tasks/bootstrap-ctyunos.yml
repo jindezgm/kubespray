@@ -1,0 +1,66 @@
+---
+- name: Enable OpenEuler-20.03-LTS-SP1 epol repo
+  ini_file:
+    dest: "/etc/yum.repos.d/ctyunos.repo"
+    section: "epol"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    mode: 0644
+  with_items:
+    - { option: "name", value: "epol" }
+    - { option: "enabled", value: "1" }
+    - { option: "baseurl", value: "https://mirrors.huaweicloud.com/openeuler/openEuler-20.03-LTS-SP1/EPOL/x86_64/" }
+    - { option: "gpgcheck", value: "0"}
+
+- name: Enable OpenEuler-20.03-LTS-SP2 epol repo
+  ini_file:
+    dest: "/etc/yum.repos.d/ctyunos.repo"
+    section: "epol2"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    mode: 0644
+  with_items:
+    - { option: "name", value: "epol2" }
+    - { option: "enabled", value: "1" }
+    - { option: "baseurl", value: "https://mirrors.huaweicloud.com/openeuler/openEuler-20.03-LTS-SP2/EPOL/main/x86_64/" }
+    - { option: "gpgcheck", value: "0"}
+
+- name: Enable OpenEuler-20.03-LTS-SP1 everything repo
+  ini_file:
+    dest: "/etc/yum.repos.d/ctyunos.repo"
+    section: "everything"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    mode: 0644
+  with_items:
+    - { option: "name", value: "everything" }
+    - { option: "enabled", value: "1" }
+    - { option: "baseurl", value: "https://mirrors.huaweicloud.com/openeuler/openEuler-20.03-LTS-SP1/everything/x86_64/" }
+    - { option: "gpgcheck", value: "0"}
+
+- name: Enable OpenEuler-20.03-LTS-SP1 update repo
+  ini_file:
+    dest: "/etc/yum.repos.d/ctyunos.repo"
+    section: "update"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    mode: 0644
+  with_items:
+    - { option: "name", value: "update" }
+    - { option: "enabled", value: "1" }
+    - { option: "baseurl", value: "https://mirrors.huaweicloud.com/openeuler/openEuler-20.03-LTS-SP1/update/x86_64/" }
+    - { option: "gpgcheck", value: "0"}
+
+- name: Enable OpenEuler-20.03-LTS-SP1 epol/update repo
+  ini_file:
+    dest: "/etc/yum.repos.d/ctyunos.repo"
+    section: "update1"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    mode: 0644
+  with_items:
+    - { option: "name", value: "update1" }
+    - { option: "enabled", value: "1" }
+    - { option: "baseurl", value: "https://mirrors.huaweicloud.com/openeuler/openEuler-20.03-LTS-SP1/EPOL/update/x86_64/" }
+    - { option: "gpgcheck", value: "0"}
+

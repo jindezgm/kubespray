@@ -7,7 +7,7 @@
     get_checksum: no
     get_mime: no
   when:
-    - ansible_os_family == "RedHat"
+    - ansible_os_family in ["RedHat", "ctyunos"]
     - "'Amazon' not in ansible_distribution"
   register: slc
 
@@ -16,7 +16,7 @@
     policy: targeted
     state: "{{ preinstall_selinux_state }}"
   when:
-    - ansible_os_family == "RedHat"
+    - ansible_os_family in ["RedHat", "ctyunos"]
     - "'Amazon' not in ansible_distribution"
     - slc.stat.exists
   changed_when: False

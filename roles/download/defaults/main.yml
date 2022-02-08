@@ -74,7 +74,7 @@ gvisor_version: 20210921
 
 # gcr and kubernetes image repo define
 gcr_image_repo: "gcr.io"
-kube_image_repo: "k8s.gcr.io"
+kube_image_repo: "k8s-gcr.m.daocloud.io"
 
 # docker image repo define
 docker_image_repo: "docker.io"

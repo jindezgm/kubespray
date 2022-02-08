@@ -26,7 +26,7 @@
   notify: Macvlan | restart network
   when: ansible_os_family in ["Debian"]
 
-- name: Macvlan | Install macvlan script on centos
+- name: Macvlan | Install macvlan script on centos/ctyunos
   copy:
     src: "{{ item }}"
     dest: /etc/sysconfig/network-scripts/
@@ -35,18 +35,18 @@
     mode: "0755"
   with_fileglob:
     - files/*
-  when: ansible_os_family == "RedHat"
+  when: ansible_os_family in ["RedHat", "ctyunos"]
 
-- name: Macvlan | Install post-up script on centos
+- name: Macvlan | Install post-up script on centos/ctyunos
   copy:
     src: "files/ifup-local"
     dest: /sbin/
     owner: root
     group: root
     mode: "0755"
-  when: ansible_os_family == "RedHat" and enable_nat_default_gateway
+  when: ansible_os_family in ["RedHat", "ctyunos"] and enable_nat_default_gateway
 
-- name: Macvlan | Install network gateway interface on centos
+- name: Macvlan | Install network gateway interface on centos/ctyunos
   template:
     src: "{{ item.src }}.j2"
     dest: "/etc/sysconfig/network-scripts/{{ item.dst }}"
@@ -55,7 +55,7 @@
     - {src: centos-routes-macvlan.cfg, dst: route-mac0 }
     - {src: centos-postup-macvlan.cfg, dst: post-up-mac0 }
   notify: Macvlan | restart network
-  when: ansible_os_family == "RedHat"
+  when: ansible_os_family in ["RedHat", "ctyunos]"
 
 - name: Macvlan | Install service nat via gateway on Flatcar Container Linux
   template:

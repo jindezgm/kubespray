@@ -396,6 +396,8 @@
       systemd-networkd
       {%- elif ansible_os_family == "Debian" -%}
       networking
+      {%- elif ansible_os_family == "ctyunos" -%}
+      NetworkManager
       {%- endif %}
     state: restarted
   when:

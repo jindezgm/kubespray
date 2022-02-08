@@ -22,13 +22,13 @@
     owner: root
     mode: 0755
   notify: Preinstall | propagate resolvconf to k8s components
-  when: ansible_os_family not in [ "RedHat", "Suse" ]
+  when: ansible_os_family not in [ "RedHat", "Suse", "ctyunos" ]
 
-- name: Configure dhclient hooks for resolv.conf (RH-only)
+- name: Configure dhclient hooks for resolv.conf (RH/ctyunos)
   template:
     src: dhclient_dnsupdate_rh.sh.j2
     dest: "{{ dhclienthookfile }}"
     owner: root
     mode: 0755
   notify: Preinstall | propagate resolvconf to k8s components
-  when: ansible_os_family == "RedHat"
+  when: ansible_os_family in ["RedHat", "ctyunos"]

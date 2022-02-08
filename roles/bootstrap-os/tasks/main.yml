@@ -39,6 +39,10 @@
 - include_tasks: bootstrap-opensuse.yml
   when: '''ID="opensuse-leap"'' in os_release.stdout_lines or ''ID="opensuse-tumbleweed"'' in os_release.stdout_lines'
 
+# ctyunos
+- include_tasks: bootstrap-ctyunos.yml
+  when: '''ID="ctyunos"'' in os_release.stdout_lines'
+
 - name: Create remote_tmp for it is used by another module
   file:
     path: "{{ ansible_remote_tmp | default('~/.ansible/tmp') }}"
@@ -52,35 +56,35 @@
     gather_subset: '!all'
     filter: ansible_*
 
-- name: Assign inventory name to unconfigured hostnames (non-CoreOS, non-Flatcar, Suse and ClearLinux, non-Fedora)
+- name: Assign inventory name to unconfigured hostnames (non-CoreOS, non-Flatcar, Suse, ClearLinux and ctyunos, non-Fedora)
   hostname:
     name: "{{ inventory_hostname }}"
   when:
     - override_system_hostname
-    - ansible_os_family not in ['Suse', 'Flatcar', 'Flatcar Container Linux by Kinvolk', 'ClearLinux']
+    - ansible_os_family not in ['Suse', 'Flatcar', 'Flatcar Container Linux by Kinvolk', 'ClearLinux', 'ctyunos']
     - not ansible_distribution == "Fedora"
     - not is_fedora_coreos
 
 # (2/3)
-- name: Assign inventory name to unconfigured hostnames (CoreOS, Flatcar, Suse, ClearLinux and Fedora only)
+- name: Assign inventory name to unconfigured hostnames (CoreOS, Flatcar, Suse, ClearLinux, Fedora and ctyunos only)
   command: "hostnamectl set-hostname {{ inventory_hostname }}"
   register: hostname_changed
   become: true
   changed_when: false
   when: >
     override_system_hostname
-    and (ansible_os_family in ['Suse', 'Flatcar', 'Flatcar Container Linux by Kinvolk', 'ClearLinux']
+    and (ansible_os_family in ['Suse', 'Flatcar', 'Flatcar Container Linux by Kinvolk', 'ClearLinux', 'ctyunos']
     or is_fedora_coreos
     or ansible_distribution == "Fedora")
 
 # (3/3)
-- name: Update hostname fact (CoreOS, Flatcar, Suse, ClearLinux and Fedora only)
+- name: Update hostname fact (CoreOS, Flatcar, Suse, ClearLinux, Fedora and ctyunos only)
   setup:
     gather_subset: '!all'
     filter: ansible_hostname
   when: >
     override_system_hostname
-    and (ansible_os_family in ['Suse', 'Flatcar', 'Flatcar Container Linux by Kinvolk', 'ClearLinux']
+    and (ansible_os_family in ['Suse', 'Flatcar', 'Flatcar Container Linux by Kinvolk', 'ClearLinux', 'ctyunos']
     or is_fedora_coreos
     or ansible_distribution == "Fedora")
 
