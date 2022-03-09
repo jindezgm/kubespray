@@ -101,7 +101,7 @@
       register: upload_image
       failed_when: not upload_image
       until: upload_image is succeeded
-      retries: 4
+      retries: "{{ download_container_retries | default(4) }}"
       delay: "{{ retry_stagger | random + 3 }}"
       when:
         - pull_required
