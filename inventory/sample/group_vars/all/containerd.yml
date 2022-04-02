@@ -47,3 +47,9 @@
 #   - registry: 10.0.0.2:5000
 #     username: user
 #     password: pass
+
+# containerd_registry_cert:
+#   - registry: 10.0.0.2:5000
+#     ca_file: /etc/containerd/certs.d/10.0.0.2:5000/ca.crt
+#     cert_file: /etc/containerd/certs.d/10.0.0.2:5000/cert.crt
+#     key_file: /etc/containerd/certs.d/10.0.0.2:5000/key.crt

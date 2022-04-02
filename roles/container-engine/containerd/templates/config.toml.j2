@@ -71,6 +71,18 @@ oom_score = {{ containerd_oom_score }}
 {% endif %}
 {% endif %}
 {% endfor %}
+{% for registry in containerd_registry_cert if registry['registry'] is defined %}
+{% if (registry['cert_file'] is defined and registry['key_file'] is defined) or registry['ca_file'] is defined %}
+      [plugins."io.containerd.grpc.v1.cri".registry.configs."{{ registry['registry'] }}".tls]
+{% if registry['ca_file'] is defined %}
+        ca_file = "{{ registry['ca_file'] }}"
+{% endif %}
+{% if registry['username'] is defined and registry['password'] is defined %}
+        cert_file = "{{ registry['cert_file'] }}"
+        key_file = "{{ registry['key_file'] }}"
+{% endif %}
+{% endif %}
+{% endfor %}
 
 {% if containerd_extra_args is defined %}
 {{ containerd_extra_args }}
