@@ -3,6 +3,11 @@
   command: cp -f /etc/resolv.conf "{{ resolvconffile }}"
   when: ansible_os_family in ["Flatcar", "Flatcar Container Linux by Kinvolk"]
 
+- name: make sure the resolvconffile exists
+  file:
+    path: "{{ resolvconffile }}"
+    state: touch
+
 - name: Add domain/search/nameservers/options to resolv.conf
   blockinfile:
     path: "{{ resolvconffile }}"
