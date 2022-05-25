@@ -1,66 +1,109 @@
 ---
-- name: Enable OpenEuler-20.03-LTS-SP1 epol repo
-  ini_file:
-    dest: "/etc/yum.repos.d/ctyunos.repo"
-    section: "epol"
-    option: "{{ item.option }}"
-    value: "{{ item.value }}"
-    mode: 0644
-  with_items:
-    - { option: "name", value: "epol" }
-    - { option: "enabled", value: "1" }
-    - { option: "baseurl", value: "https://mirrors.huaweicloud.com/openeuler/openEuler-20.03-LTS-SP1/EPOL/x86_64/" }
-    - { option: "gpgcheck", value: "0"}
+- name: check status of /offline/ctyunos.repo
+  stat:
+    path: /offline/ctyunos.repo
+    follow: no
+    get_attributes: no
+    get_checksum: no
+    get_mime: no
+  failed_when: false
+  delegate_to: localhost
+  connection: local
+  run_once: true
+  register: ctyunosrepo_stat
 
-- name: Enable OpenEuler-20.03-LTS-SP2 epol repo
-  ini_file:
-    dest: "/etc/yum.repos.d/ctyunos.repo"
-    section: "epol2"
-    option: "{{ item.option }}"
-    value: "{{ item.value }}"
-    mode: 0644
-  with_items:
-    - { option: "name", value: "epol2" }
-    - { option: "enabled", value: "1" }
-    - { option: "baseurl", value: "https://mirrors.huaweicloud.com/openeuler/openEuler-20.03-LTS-SP2/EPOL/main/x86_64/" }
-    - { option: "gpgcheck", value: "0"}
+- block:
 
-- name: Enable OpenEuler-20.03-LTS-SP1 everything repo
-  ini_file:
-    dest: "/etc/yum.repos.d/ctyunos.repo"
-    section: "everything"
-    option: "{{ item.option }}"
-    value: "{{ item.value }}"
-    mode: 0644
-  with_items:
-    - { option: "name", value: "everything" }
-    - { option: "enabled", value: "1" }
-    - { option: "baseurl", value: "https://mirrors.huaweicloud.com/openeuler/openEuler-20.03-LTS-SP1/everything/x86_64/" }
-    - { option: "gpgcheck", value: "0"}
+  - name: Enable OpenEuler-20.03-LTS-SP1 epol repo
+    ini_file:
+      dest: "/etc/yum.repos.d/ctyunos.repo"
+      section: "epol"
+      option: "{{ item.option }}"
+      value: "{{ item.value }}"
+      mode: 0644
+    with_items:
+      - { option: "name", value: "epol" }
+      - { option: "enabled", value: "1" }
+      - { option: "baseurl", value: "https://mirrors.huaweicloud.com/openeuler/openEuler-20.03-LTS-SP1/EPOL/x86_64/" }
+      - { option: "gpgcheck", value: "0"}
 
-- name: Enable OpenEuler-20.03-LTS-SP1 update repo
-  ini_file:
-    dest: "/etc/yum.repos.d/ctyunos.repo"
-    section: "update"
-    option: "{{ item.option }}"
-    value: "{{ item.value }}"
-    mode: 0644
-  with_items:
-    - { option: "name", value: "update" }
-    - { option: "enabled", value: "1" }
-    - { option: "baseurl", value: "https://mirrors.huaweicloud.com/openeuler/openEuler-20.03-LTS-SP1/update/x86_64/" }
-    - { option: "gpgcheck", value: "0"}
+  - name: Enable OpenEuler-20.03-LTS-SP2 epol repo
+    ini_file:
+      dest: "/etc/yum.repos.d/ctyunos.repo"
+      section: "epol2"
+      option: "{{ item.option }}"
+      value: "{{ item.value }}"
+      mode: 0644
+    with_items:
+      - { option: "name", value: "epol2" }
+      - { option: "enabled", value: "1" }
+      - { option: "baseurl", value: "https://mirrors.huaweicloud.com/openeuler/openEuler-20.03-LTS-SP2/EPOL/main/x86_64/" }
+      - { option: "gpgcheck", value: "0"}
 
-- name: Enable OpenEuler-20.03-LTS-SP1 epol/update repo
-  ini_file:
-    dest: "/etc/yum.repos.d/ctyunos.repo"
-    section: "update1"
-    option: "{{ item.option }}"
-    value: "{{ item.value }}"
-    mode: 0644
-  with_items:
-    - { option: "name", value: "update1" }
-    - { option: "enabled", value: "1" }
-    - { option: "baseurl", value: "https://mirrors.huaweicloud.com/openeuler/openEuler-20.03-LTS-SP1/EPOL/update/x86_64/" }
-    - { option: "gpgcheck", value: "0"}
+  - name: Enable OpenEuler-20.03-LTS-SP1 everything repo
+    ini_file:
+      dest: "/etc/yum.repos.d/ctyunos.repo"
+      section: "everything"
+      option: "{{ item.option }}"
+      value: "{{ item.value }}"
+      mode: 0644
+    with_items:
+      - { option: "name", value: "everything" }
+      - { option: "enabled", value: "1" }
+      - { option: "baseurl", value: "https://mirrors.huaweicloud.com/openeuler/openEuler-20.03-LTS-SP1/everything/x86_64/" }
+      - { option: "gpgcheck", value: "0"}
 
+  - name: Enable OpenEuler-20.03-LTS-SP1 update repo
+    ini_file:
+      dest: "/etc/yum.repos.d/ctyunos.repo"
+      section: "update"
+      option: "{{ item.option }}"
+      value: "{{ item.value }}"
+      mode: 0644
+    with_items:
+      - { option: "name", value: "update" }
+      - { option: "enabled", value: "1" }
+      - { option: "baseurl", value: "https://mirrors.huaweicloud.com/openeuler/openEuler-20.03-LTS-SP1/update/x86_64/" }
+      - { option: "gpgcheck", value: "0"}
+
+  - name: Enable OpenEuler-20.03-LTS-SP1 epol/update repo
+    ini_file:
+      dest: "/etc/yum.repos.d/ctyunos.repo"
+      section: "update1"
+      option: "{{ item.option }}"
+      value: "{{ item.value }}"
+      mode: 0644
+    with_items:
+      - { option: "name", value: "update1" }
+      - { option: "enabled", value: "1" }
+      - { option: "baseurl", value: "https://mirrors.huaweicloud.com/openeuler/openEuler-20.03-LTS-SP1/EPOL/update/x86_64/" }
+      - { option: "gpgcheck", value: "0"}
+
+  when: ctyunosrepo_stat.stat.exists is not defined or not ctyunosrepo_stat.stat.exists
+
+- name: bootstrap ctyunos offline | Copy offline ctyunos.repo
+  copy:
+    src: /offline/ctyunos.repo
+    dest: "/etc/yum.repos.d/ctyunos.repo"
+    mode: 0644
+  when: ctyunosrepo_stat.stat.exists is defined and ctyunosrepo_stat.stat.exists
+
+- name: check status of /offline/releases.tar.gz
+  stat:
+    path: /offline/releases.tar.gz
+    follow: no
+    get_attributes: no
+    get_checksum: no
+    get_mime: no
+  failed_when: false
+  delegate_to: localhost
+  connection: local
+  run_once: true
+  register: releases_stat
+
+- name: bootstrap ctyunos offline | Unarchive releases.tar.gz
+  unarchive:
+    src: /offline/releases.tar.gz
+    dest: "/tmp"
+    mode: 0644
+  when: releases_stat.stat.exists is defined and releases_stat.stat.exists
